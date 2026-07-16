@@ -34,21 +34,19 @@ async function generateJathakam() {
   try {
 
     const response = await fetch(
-      "https://kundli1.p.rapidapi.com/",
-      {
-        method:"POST",
+  "https://kundli1.p.rapidapi.com/",
+  {
+    method:"POST",
 
-        headers:{
-  "Content-Type":"application/x-www-form-urlencoded",
-  "X-RapidAPI-Key":"మీ_API_KEY",
-  "X-RapidAPI-Host":"kundli1.p.rapidapi.com"
-},
+    headers:{
+      "Content-Type":"application/x-www-form-urlencoded",
+      "X-RapidAPI-Key":"మీ_API_KEY",
+      "X-RapidAPI-Host":"kundli1.p.rapidapi.com"
+    },
 
-body:body
-
-        body:body
-      }
-    );
+    body:body
+  }
+);
 
 
     const text = await response.text();
