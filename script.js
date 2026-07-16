@@ -22,7 +22,7 @@ async function generateJathakam() {
   const birthdate = ${d[2]}-${d[1]}-${d[0]};
 
   const body =
-    name=${encodeURIComponent(name)}&birthdate=${birthdate}&birthtime=${encodeURIComponent(time)}&City=${encodeURIComponent(place.toUpperCase())};
+name=${encodeURIComponent(name)}&birthdate=${birthdate}&birthtime=${encodeURIComponent(time)}&City=${encodeURIComponent(place.toUpperCase())};
 
   try {
 
