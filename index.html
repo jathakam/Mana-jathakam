@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="te">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,55 +8,83 @@
 
 <link rel="stylesheet" href="style.css">
 
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu:wght@400;500;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
 </head>
 
 <body>
 
 <div class="container">
 
-<h1>🙏 మన జాతకం</h1>
+<div class="header">
 
-<label>పేరు</label>
-<input type="text" id="name" placeholder="మీ పేరు">
+<h1>🕉️ మన జాతకం</h1>
 
+<p class="subtitle">
+పూజారులు & జ్యోతిష్యుల డిజిటల్ సహాయకుడు
+</p>
 
-<label>లింగం</label>
-<select id="gender">
-<option>పురుషుడు</option>
-<option>స్త్రీ</option>
-</select>
+</div>
 
+<div class="menu">
 
-<label>పుట్టిన తేదీ</label>
-<input type="date" id="dob">
-
-
-<label>పుట్టిన సమయం</label>
-<input type="time" id="tob">
-
-
-<label>పుట్టిన స్థలం</label>
-<input type="text" id="place" placeholder="ఉదా: తాడిపత్రి">
-
-
-<button onclick="generateJathakam()">
-జాతకం చూపించండి
+<button onclick="location.href='jathakam.html'">
+<i class="fa-solid fa-scroll"></i><br>
+జాతకం
 </button>
 
+<button>
+<i class="fa-solid fa-calendar-days"></i><br>
+పంచాంగం
+</button>
 
-<div id="loading" style="display:none;">
-దయచేసి వేచి ఉండండి...
+<button>
+<i class="fa-solid fa-om"></i><br>
+ముహూర్తాలు
+</button>
+
+<button>
+<i class="fa-solid fa-hands-praying"></i><br>
+పూజలు
+</button>
+
+<button>
+<i class="fa-solid fa-users"></i><br>
+కస్టమర్లు
+</button>
+
+<button>
+<i class="fa-solid fa-bullhorn"></i><br>
+పోస్టర్లు
+</button>
+
+<button>
+<i class="fa-solid fa-book-open"></i><br>
+ఆగమాలు
+</button>
+
+<button>
+<i class="fa-solid fa-gear"></i><br>
+సెట్టింగ్స్
+</button>
+
 </div>
 
+<footer class="footer">
 
-<div id="result"></div>
+© 2026 <b>మన జాతకం</b>
 
+<br><br>
+
+Premium Telugu Astrology Platform
+
+</footer>
 
 </div>
-
 
 <script src="script.js"></script>
 
 </body>
-
 </html>
