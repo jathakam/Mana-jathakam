@@ -263,3 +263,40 @@ h1{
 button{
     position:relative;
     z-index:2;
+button{
+    position:relative;
+    z-index:2;
+}
+
+.jathakam-box{
+    margin-top:20px;
+    background:#ffffff;
+    padding:15px;
+    border-radius:15px;
+    overflow-x:auto;
+    max-width:100%;
+    box-shadow:0 5px 15px rgba(0,0,0,.15);
+}
+
+.jathakam-box img{
+    max-width:100%;
+    height:auto;
+    display:block;
+    margin:auto;
+}
+
+.jathakam-box table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+.jathakam-box td,
+.jathakam-box th{
+    padding:8px;
+    border:1px solid #ddd;
+}
+
+.jathakam-box pre{
+    white-space:pre-wrap;
+    word-break:break-word;
+}
