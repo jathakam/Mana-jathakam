@@ -17,12 +17,12 @@ async function generateJathakam() {
     result.innerHTML = "⚠️ దయచేసి అన్ని వివరాలు నమోదు చేయండి.";
     return;
   }
-  
+
   const d = dob.split("-");
   const birthdate = ${d[2]}-${d[1]}-${d[0]};
 
   const body =
-name=${encodeURIComponent(name)}&birthdate=${birthdate}&birthtime=${encodeURIComponent(time)}&City=${encodeURIComponent(place.toUpperCase())};
+    name=${encodeURIComponent(name)}&birthdate=${birthdate}&birthtime=${encodeURIComponent(time)}&City=${encodeURIComponent(place.toUpperCase())};
 
   try {
 
@@ -36,36 +36,44 @@ name=${encodeURIComponent(name)}&birthdate=${birthdate}&birthtime=${encodeURICom
       body: body
     });
 
-    if (!response.ok) {
-      throw new Error("API Error: " + response.status);
-    }
+const text = await response.text();
+console.log(response.status);
+console.log(text);
 
-    const text = await response.text();
-
-    loading.style.display = "none";
+loading.style.display = "none";
 
     result.innerHTML = `
-    <div class="result-card">
-
       <h2>🙏 ${name} గారు</h2>
-
-      <p>👤 <b>లింగం:</b> ${gender}</p>
-      <p>📅 <b>పుట్టిన తేదీ:</b> ${dob}</p>
-      <p>⏰ <b>పుట్టిన సమయం:</b> ${time}</p>
-      <p>📍 <b>పుట్టిన స్థలం:</b> ${place}</p>
+      <p><b>లింగం:</b> ${gender}</p>
+      <p><b>పుట్టిన తేదీ:</b> ${dob}</p>
+      <p><b>పుట్టిన సమయం:</b> ${time}</p>
+      <p><b>పుట్టిన స్థలం:</b> ${place}</p>
 
       <hr>
 
-      ${text}
+      <h3>జాతక వివరాలు</h3>
+<pre>
+Status: ${response.status}
 
-    </div>
+${text}
+</pre>
     `;
 
   } catch (error) {
 
     loading.style.display = "none";
-    result.innerHTML = "❌ " + error.message;
+    result.innerHTML = "❌ లోపం: " + error.message;
 
   }
 
 }
+function shareJathakam() {
+  const text = document.getElementById("result").innerText;
+
+  if (!text.trim()) {
+    alert("ముందు జాతకం తయారు చేయండి.");
+    return;
+  }
+
+  const url = "https://wa.me/?text=" + encodeURIComponent(text);
+window.open(url, "_blank");
