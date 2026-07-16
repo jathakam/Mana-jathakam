@@ -3,15 +3,69 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>జాతకం</title>
+
+<title>జాతకం - మన జాతకం</title>
+
 <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
+<div class="container">
+
 <h1>📜 జాతకం</h1>
 
-<p>ఈ పేజీ విజయవంతంగా సృష్టించబడింది.</p>
+<input
+type="text"
+id="name"
+placeholder="పేరు">
+
+<select id="gender">
+<option value="">లింగం ఎంచుకోండి</option>
+<option>పురుషుడు</option>
+<option>స్త్రీ</option>
+</select>
+
+<input
+type="date"
+id="dob">
+
+<input
+type="time"
+id="tob">
+
+<input
+type="text"
+id="place"
+placeholder="పుట్టిన స్థలం">
+
+<button onclick="generateJathakam()">
+జాతకం చూపించండి
+</button>
+
+<div id="loading" style="display:none;">
+⏳ జాతకం తయారవుతోంది...
+</div>
+
+<div id="result"></div>
+
+<br>
+
+<button onclick="window.print()">
+🖨️ Print
+</button>
+
+<button onclick="shareJathakam()">
+📤 Share
+</button>
+
+<br><br>
+
+<a href="index.html">
+⬅️ హోమ్
+</a>
+
+</div>
 
 <script src="script.js"></script>
 
