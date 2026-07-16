@@ -17,7 +17,7 @@ async function generateJathakam() {
     result.innerHTML = "⚠️ దయచేసి అన్ని వివరాలు నమోదు చేయండి.";
     return;
   }
-
+  
   const d = dob.split("-");
   const birthdate = ${d[2]}-${d[1]}-${d[0]};
 
