@@ -1,4 +1,4 @@
-async function generateJathakam() {
+alert("Button Clicked");
 
   const loading = document.getElementById("loading");
   const result = document.getElementById("result");
