@@ -1,4 +1,6 @@
-alert("Button Clicked");
+async function generateJathakam() {
+
+  alert("Button Clicked");
 
   const loading = document.getElementById("loading");
   const result = document.getElementById("result");
@@ -21,7 +23,7 @@ alert("Button Clicked");
   const d = dob.split("-");
   const birthdate = `${d[2]}-${d[1]}-${d[0]}`;
 
-const body = `name=${encodeURIComponent(name)}&birthdate=${birthdate}&birthtime=${encodeURIComponent(time)}&City=${encodeURIComponent(place.toUpperCase())}`;
+  const body = `name=${encodeURIComponent(name)}&birthdate=${birthdate}&birthtime=${encodeURIComponent(time)}&City=${encodeURIComponent(place.toUpperCase())}`;
 
   try {
 
@@ -35,11 +37,9 @@ const body = `name=${encodeURIComponent(name)}&birthdate=${birthdate}&birthtime=
       body: body
     });
 
-const text = await response.text();
-console.log(response.status);
-console.log(text);
+    const text = await response.text();
 
-loading.style.display = "none";
+    loading.style.display = "none";
 
     result.innerHTML = `
       <h2>🙏 ${name} గారు</h2>
@@ -50,23 +50,21 @@ loading.style.display = "none";
 
       <hr>
 
-      <h3>జాతక వివరాలు</h3>
-<pre>
-Status: ${response.status}
-
-${text}
-</pre>
+      <pre>${text}</pre>
     `;
 
   } catch (error) {
 
     loading.style.display = "none";
     result.innerHTML = "❌ లోపం: " + error.message;
+    alert(error.message);
 
   }
 
 }
+
 function shareJathakam() {
+
   const text = document.getElementById("result").innerText;
 
   if (!text.trim()) {
@@ -75,4 +73,6 @@ function shareJathakam() {
   }
 
   const url = "https://wa.me/?text=" + encodeURIComponent(text);
-window.open(url, "_blank");
+  window.open(url, "_blank");
+
+}
