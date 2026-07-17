@@ -19,9 +19,10 @@ async function generateJathakam() {
   }
 
   const d = dob.split("-");
-  const birthdate = `${d[2]}-${d[1]}-${d[0]}`;
+  const birthdate = ${d[2]}-${d[1]}-${d[0]};
 
-  const body = `name=${encodeURIComponent(name)}&birthdate=${birthdate}&birthtime=${encodeURIComponent(time)}&City=${encodeURIComponent(place.toUpperCase())}`;
+  const body =
+    name=${encodeURIComponent(name)}&birthdate=${birthdate}&birthtime=${encodeURIComponent(time)}&City=${encodeURIComponent(place.toUpperCase())};
 
   try {
 
@@ -75,5 +76,4 @@ function shareJathakam() {
   }
 
   const url = "https://wa.me/?text=" + encodeURIComponent(text);
-  window.open(url, "_blank");
-}
+window.open(url, "_blank");
