@@ -59,6 +59,7 @@ result.innerHTML = `
       },
       body: body
     });
+    alert(response.status);
 
     const html = await response.text();
 
