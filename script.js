@@ -70,3 +70,30 @@ function shareJathakam() {
   window.open(url, "_blank");
 
 }
+.jathakam-box{
+    background:#fffdf5;
+    border:2px solid #d4af37;
+    border-radius:15px;
+    padding:20px;
+    margin-top:20px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.15);
+    font-family:'Noto Sans Telugu',sans-serif;
+}
+
+.jathakam-box h2{
+    color:#b22222;
+    text-align:center;
+}
+
+.jathakam-box h3{
+    color:#8b4513;
+    border-bottom:1px solid #d4af37;
+    padding-bottom:5px;
+}
+
+.jathakam-box pre{
+    white-space:pre-wrap;
+    word-wrap:break-word;
+    font-size:16px;
+    line-height:1.7;
+}
