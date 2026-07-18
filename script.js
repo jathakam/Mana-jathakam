@@ -42,7 +42,7 @@ async function generateJathakam() {
     }
 
     const html = await response.text();
-
+alert("Fetch పూర్తైంది");
     loading.style.display = "none";
     result.innerHTML = html;
 
