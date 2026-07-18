@@ -31,7 +31,7 @@ async function generateJathakam() {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
-        "X-RapidAPI-Key": "YOUR_RAPIDAPI_KEY",
+        "X-RapidAPI-Key": "a97e48a6b4msh1f863e6605b79e5p188a89jsnac6609305923",
         "X-RapidAPI-Host": "kundli1.p.rapidapi.com"
       },
       body: body
