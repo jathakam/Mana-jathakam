@@ -15,16 +15,17 @@ async function generateJathakam() {
   const place = document.getElementById("place").value;
 
   if (!name || !dob || !time || !place) {
-  loading.style.display = "none";
-  result.innerHTML = "⚠️ దయచేసి అన్ని వివరాలు నమోదు చేయండి.";
-  return;
-}
+    loading.style.display = "none";
+    result.innerHTML = "⚠️ దయచేసి అన్ని వివరాలు నమోదు చేయండి.";
+    return;
+  }
 
   const d = dob.split("-");
   const birthdate = `${d[2]}-${d[1]}-${d[0]}`;
 
   const body =
     `name=${encodeURIComponent(name)}&birthdate=${birthdate}&birthtime=${encodeURIComponent(time)}&City=${encodeURIComponent(place.toUpperCase())}`;
+
   try {
 
     const response = await fetch("https://kundli1.p.rapidapi.com/", {
@@ -42,21 +43,21 @@ async function generateJathakam() {
     }
 
     const html = await response.text();
-alert("Fetch పూర్తైంది");
+
     loading.style.display = "none";
 
-alert(html);
-
-result.innerHTML = "<pre>" + html + "</pre>";
+    result.innerHTML = "<pre>" + html + "</pre>";
 
   } catch (error) {
 
     loading.style.display = "none";
     result.innerHTML = "❌ లోపం: " + error.message;
     alert(error.message);
+
   }
 
 }
+
 function shareJathakam() {
 
   const text = document.getElementById("result").innerText;
