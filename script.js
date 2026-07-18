@@ -37,21 +37,11 @@ async function generateJathakam() {
       body: body
     });
 
-    const text = await response.text();
+    const html = await response.text();
 
-    loading.style.display = "none";
+loading.style.display = "none";
 
-    result.innerHTML = `
-      <h2>🙏 ${name} గారు</h2>
-      <p><b>లింగం:</b> ${gender}</p>
-      <p><b>పుట్టిన తేదీ:</b> ${dob}</p>
-      <p><b>పుట్టిన సమయం:</b> ${time}</p>
-      <p><b>పుట్టిన స్థలం:</b> ${place}</p>
-
-      <hr>
-
-      <pre>${text}</pre>
-    `;
+result.innerHTML = html;
 
   } catch (error) {
 
