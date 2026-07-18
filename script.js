@@ -6,7 +6,30 @@ async function generateJathakam() {
   const result = document.getElementById("result");
 
   loading.style.display = "block";
-  result.innerHTML = "";
+  const parser = new DOMParser();
+const doc = parser.parseFromString(html, "text/html");
+
+const info = doc.body.innerText;
+
+result.innerHTML = `
+<div class="jathakam-box">
+
+<h2>📜 జన్మ జాతకం</h2>
+
+<p><b>👤 పేరు:</b> ${name}</p>
+<p><b>🚹 లింగం:</b> ${gender}</p>
+<p><b>📅 పుట్టిన తేదీ:</b> ${dob}</p>
+<p><b>🕒 పుట్టిన సమయం:</b> ${time}</p>
+<p><b>📍 పుట్టిన స్థలం:</b> ${place}</p>
+
+<hr>
+
+<h3>🔯 జాతక వివరాలు</h3>
+
+<pre>${info}</pre>
+
+</div>
+`;
 
   const name = document.getElementById("name").value;
   const gender = document.getElementById("gender").value;
