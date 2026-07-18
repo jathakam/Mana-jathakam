@@ -25,3 +25,45 @@ async function generateJathakam() {
 
   const body =
     `name=${encodeURIComponent(name)}&birthdate=${birthdate}&birthtime=${encodeURIComponent(time)}&City=${encodeURIComponent(place.toUpperCase())}`;
+  try {
+
+    const response = await fetch("https://kundli1.p.rapidapi.com/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "X-RapidAPI-Key": "YOUR_RAPIDAPI_KEY",
+        "X-RapidAPI-Host": "kundli1.p.rapidapi.com"
+      },
+      body: body
+    });
+
+    if (!response.ok) {
+      throw new Error("API Error: " + response.status);
+    }
+
+    const html = await response.text();
+
+    loading.style.display = "none";
+    result.innerHTML = html;
+
+  } catch (error) {
+
+    loading.style.display = "none";
+    result.innerHTML = "❌ లోపం: " + error.message;
+    alert(error.message);
+  }
+
+}
+function shareJathakam() {
+
+  const text = document.getElementById("result").innerText;
+
+  if (!text.trim()) {
+    alert("ముందు జాతకం తయారు చేయండి.");
+    return;
+  }
+
+  const url = "https://wa.me/?text=" + encodeURIComponent(text);
+  window.open(url, "_blank");
+
+}
