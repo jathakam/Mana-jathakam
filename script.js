@@ -71,3 +71,4 @@ function shareJathakam() {
   window.open(url, "_blank");
 
 }
+/script.js
