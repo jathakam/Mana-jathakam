@@ -29,6 +29,7 @@ async function generateJathakam() {
   try {
 
     const response = await fetch("https://kundli1.p.rapidapi.com/", {
+      alert("API Call Start");
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -43,6 +44,7 @@ async function generateJathakam() {
     }
 
     const html = await response.text();
+    alert("API Response వచ్చింది");
 
     loading.style.display = "none";
 
