@@ -1,4 +1,5 @@
 let jathakamFullReport = "";
+let jathakamApiText = "";
 
 async function generateJathakam() {
   const loading = document.getElementById("loading");
@@ -40,6 +41,7 @@ async function generateJathakam() {
     });
 
     const text = await response.text();
+    jathakamApiText = text;
 
     if (!response.ok) {
       throw new Error("API లోపం: " + response.status);
@@ -119,4 +121,7 @@ function shareJathakam() {
 
   const url = "https://wa.me/?text=" + encodeURIComponent(text);
   window.open(url, "_blank");
+}
+function showTab(tabName) {
+  alert(tabName + " ట్యాబ్ పనిచేస్తోంది");
 }
