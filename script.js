@@ -122,6 +122,3 @@ function shareJathakam() {
   const url = "https://wa.me/?text=" + encodeURIComponent(text);
   window.open(url, "_blank");
 }
-function showTab(tabName) {
-  alert(tabName + " ట్యాబ్ పనిచేస్తోంది");
-}
