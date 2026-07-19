@@ -134,3 +134,42 @@ function shareJathakam() {
   const url = "https://wa.me/?text=" + encodeURIComponent(text);
   window.open(url, "_blank");
 }
+function showTab(tabName) {
+  alert(tabName + " ట్యాబ్ నొక్కారు");
+
+  const result = document.getElementById("result");
+
+  if (!result.innerHTML.trim()) {
+    alert("ముందుగా జాతకం తయారు చేయండి.");
+    return;
+  }
+
+  if (!window.jathakamFullReport) {
+    window.jathakamFullReport = result.innerHTML;
+  }
+
+  if (tabName === "summary") {
+    result.innerHTML = `
+      <div class="card">
+        <h2>📋 జాతక సారాంశం</h2>
+        <p>సారాంశం ట్యాబ్ పనిచేస్తోంది.</p>
+      </div>
+    `;
+  } else if (tabName === "kundli") {
+    result.innerHTML = `
+      <div class="card">
+        <h2>🪐 కుండలి వివరాలు</h2>
+        <p>కుండలి ట్యాబ్ పనిచేస్తోంది.</p>
+      </div>
+    `;
+  } else if (tabName === "ashtaka") {
+    result.innerHTML = `
+      <div class="card">
+        <h2>📊 అష్టకవర్గం</h2>
+        <p>అష్టకవర్గం ట్యాబ్ పనిచేస్తోంది.</p>
+      </div>
+    `;
+  } else if (tabName === "full") {
+    result.innerHTML = window.jathakamFullReport;
+  }
+}
