@@ -76,6 +76,52 @@ async function generateJathakam() {
 }
 
 function shareJathakam() {
+  function showTab(tabName) {
+
+  const result = document.getElementById("result");
+
+  if (!result.innerHTML.trim()) {
+    alert("ముందుగా జాతకం తయారు చేయండి.");
+    return;
+  }
+
+  const fullReport = result.innerHTML;
+
+  if (!window.jathakamFullReport) {
+    window.jathakamFullReport = fullReport;
+  }
+
+  if (tabName === "summary") {
+    result.innerHTML = `
+      <div class="card">
+        <h2>📋 జాతక సారాంశం</h2>
+        <p>ఇక్కడ త్వరలో నక్షత్రం, గణం, నాడి, తిథి, యోగం, కరణం తెలుగులో కనిపిస్తాయి.</p>
+      </div>
+    `;
+  }
+
+  if (tabName === "kundli") {
+    result.innerHTML = `
+      <div class="card">
+        <h2>🪐 కుండలి వివరాలు</h2>
+        <p>ఇక్కడ జన్మ కుండలి, చంద్ర కుండలి, నవాంశ కుండలి కనిపిస్తాయి.</p>
+      </div>
+    `;
+  }
+
+  if (tabName === "ashtaka") {
+    result.innerHTML = `
+      <div class="card">
+        <h2>📊 అష్టకవర్గం</h2>
+        <p>ఇక్కడ అష్టకవర్గ పట్టికలు కనిపిస్తాయి.</p>
+      </div>
+    `;
+  }
+
+  if (tabName === "full") {
+    result.innerHTML = window.jathakamFullReport;
+  }
+}
 
   const text = document.getElementById("result").innerText.trim();
 
@@ -83,6 +129,7 @@ function shareJathakam() {
     alert("ముందుగా జాతకం తయారు చేయండి.");
     return;
   }
+  
 
   const url = "https://wa.me/?text=" + encodeURIComponent(text);
   window.open(url, "_blank");
