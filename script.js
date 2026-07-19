@@ -30,14 +30,16 @@ async function generateJathakam() {
 
     const response = await fetch("https://kundli1.p.rapidapi.com/", {
       alert("API Call Start");
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        "X-RapidAPI-Key": "a97e48a6b4msh1f863e6605b79e5p188a89jsnac6609305923",
-        "X-RapidAPI-Host": "kundli1.p.rapidapi.com"
-      },
-      body: body
-    });
+
+const response = await fetch("https://kundli1.p.rapidapi.com/", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/x-www-form-urlencoded",
+    "X-RapidAPI-Key": "a97e48a6b4msh1f863e6605b79e5p188a89jsnac6609305923",
+    "X-RapidAPI-Host": "kundli1.p.rapidapi.com"
+  },
+  body: body
+});
 
     if (!response.ok) {
       throw new Error("API Error: " + response.status);
