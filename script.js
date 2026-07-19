@@ -84,15 +84,19 @@ function showTab(tabName) {
     alert("ముందుగా జాతకం తయారు చేయండి.");
     return;
   }
+if (tabName === "summary") {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(jathakamApiText, "text/html");
+  const reportText = doc.body.innerText;
 
-  if (tabName === "summary") {
-    result.innerHTML = `
-      <div class="card">
-        <h2>📋 జాతక సారాంశం</h2>
-        <p>సారాంశం ట్యాబ్ పనిచేస్తోంది.</p>
-      </div>
-    `;
-  } else if (tabName === "kundli") {
+  result.innerHTML = `
+    <div class="card">
+      <h2>📋 జాతక సారాంశం</h2>
+      <pre style="white-space: pre-wrap;">${reportText}</pre>
+    </div>
+  `;
+}
+   else if (tabName === "kundli") {
     result.innerHTML = `
       <div class="card">
         <h2>🪐 కుండలి వివరాలు</h2>
