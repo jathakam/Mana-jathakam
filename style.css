@@ -1,382 +1,622 @@
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Noto Sans Telugu',sans-serif;
+/* =========================================
+   మన జాతకం — Premium Design
+========================================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-body{
-background:linear-gradient(135deg,#fff7e6,#ffe0b2);
-min-height:100vh;
-padding:20px;
-color:#333;
+html {
+  scroll-behavior: smooth;
 }
 
-.page-wrapper{
-max-width:900px;
-margin:auto;
+body {
+  min-height: 100vh;
+  padding: 28px 18px;
+  color: #2d241d;
+  font-family: "Noto Sans Telugu", Arial, sans-serif;
+  background:
+    radial-gradient(circle at top left, rgba(255, 193, 7, 0.22), transparent 34%),
+    radial-gradient(circle at bottom right, rgba(21, 101, 192, 0.18), transparent 35%),
+    linear-gradient(135deg, #fffaf0 0%, #f4f7ff 50%, #fff3df 100%);
+  background-attachment: fixed;
 }
 
-.jathakam-container{
-background:#ffffff;
-border-radius:20px;
-padding:25px;
-box-shadow:0 10px 30px rgba(0,0,0,.15);
+/* =========================================
+   సాధారణ Page Layout
+========================================= */
+
+.page-wrapper,
+.container,
+.main-container,
+.site-container {
+  width: 100%;
+  max-width: 1050px;
+  margin: 0 auto;
 }
 
-.page-heading{
-display:flex;
-align-items:center;
-gap:15px;
-margin-bottom:25px;
+.jathakam-container,
+.home-container,
+.main-card,
+.content-card {
+  position: relative;
+  overflow: hidden;
+  padding: 34px;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.93);
+  box-shadow:
+    0 22px 55px rgba(65, 45, 20, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(12px);
 }
 
-.heading-icon{
-font-size:50px;
+.jathakam-container::before,
+.home-container::before,
+.main-card::before,
+.content-card::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 7px;
+  content: "";
+  background: linear-gradient(
+    90deg,
+    #7b1f1f,
+    #d68b00,
+    #ffd166,
+    #1565c0,
+    #7b1f1f
+  );
 }
 
-.page-heading h1{
-font-size:34px;
-color:#8B0000;
-margin-bottom:5px;
+/* =========================================
+   Page Heading
+========================================= */
+
+.page-heading {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 20px 22px;
+  margin-bottom: 28px;
+  border-radius: 20px;
+  color: #ffffff;
+  background:
+    linear-gradient(135deg, rgba(88, 20, 25, 0.98), rgba(168, 75, 0, 0.95));
+  box-shadow: 0 12px 28px rgba(112, 30, 25, 0.22);
 }
 
-.page-heading p{
-color:#555;
+.heading-icon {
+  display: grid;
+  flex: 0 0 72px;
+  width: 72px;
+  height: 72px;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 20px;
+  font-size: 46px;
+  background: rgba(255, 255, 255, 0.14);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
 }
 
-.form-card{
-display:grid;
-gap:15px;
+.page-heading h1 {
+  margin-bottom: 5px;
+  color: #ffffff;
+  font-size: clamp(27px, 4vw, 40px);
+  line-height: 1.25;
 }
 
-.form-group{
-display:flex;
-flex-direction:column;
+.page-heading p {
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 16px;
+  line-height: 1.6;
 }
 
-.form-group label{
-font-weight:600;
-margin-bottom:6px;
-color:#7a1f00;
+/* =========================================
+   Home Header / Navigation
+========================================= */
+
+header,
+.site-header,
+.app-header {
+  padding: 28px;
+  border-radius: 26px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 18px 45px rgba(47, 39, 26, 0.14);
+}
+
+.logo,
+.brand,
+.brand-area {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.logo h1,
+.brand h1,
+.site-title {
+  color: #591b21;
+  font-size: clamp(28px, 4vw, 42px);
+}
+
+.logo p,
+.brand p,
+.site-subtitle {
+  color: #665d55;
+  line-height: 1.6;
+}
+
+nav,
+.nav-menu,
+.menu,
+.navigation {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+nav a,
+.nav-menu a,
+.menu a,
+.navigation a {
+  min-width: 105px;
+  padding: 14px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 14px;
+  color: #ffffff;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  background: linear-gradient(145deg, #1976d2, #0d47a1);
+  box-shadow: 0 8px 16px rgba(21, 101, 192, 0.2);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    filter 0.25s ease;
+}
+
+nav a:hover,
+.nav-menu a:hover,
+.menu a:hover,
+.navigation a:hover {
+  transform: translateY(-4px);
+  filter: brightness(1.08);
+  box-shadow: 0 13px 24px rgba(21, 101, 192, 0.28);
+}
+
+/* =========================================
+   Form Card
+========================================= */
+
+.form-card {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  padding: 26px;
+  border: 1px solid #f0dcc0;
+  border-radius: 22px;
+  background: linear-gradient(145deg, #ffffff, #fffaf1);
+  box-shadow: 0 12px 28px rgba(75, 55, 28, 0.09);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  color: #6d241e;
+  font-size: 15px;
+  font-weight: 800;
 }
 
 .form-group input,
-.form-group select{
-padding:12px;
-border:1px solid #ccc;
-border-radius:10px;
-font-size:16px;
-outline:none;
+.form-group select,
+input,
+select {
+  width: 100%;
+  min-height: 52px;
+  padding: 12px 15px;
+  border: 1px solid #d9dce5;
+  border-radius: 13px;
+  outline: none;
+  color: #292929;
+  font-family: inherit;
+  font-size: 16px;
+  background: #ffffff;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
 }
 
 .form-group input:focus,
-.form-group select:focus{
-border-color:#ff9800;
-box-shadow:0 0 5px rgba(255,152,0,.4);
+.form-group select:focus,
+input:focus,
+select:focus {
+  border-color: #d99100;
+  box-shadow: 0 0 0 4px rgba(255, 173, 0, 0.15);
+  transform: translateY(-1px);
 }
+
+/* =========================================
+   Buttons
+========================================= */
 
 .primary-button,
-.secondary-button{
-padding:14px;
-border:none;
-border-radius:10px;
-font-size:17px;
-cursor:pointer;
-font-weight:bold;
-transition:.3s;
-}
-
-.primary-button{
-background:#ff9800;
-color:white;
-}
-
-.primary-button:hover{
-background:#f57c00;
-}
-
-.secondary-button{
-background:#6c757d;
-color:white;
-}
-
-.secondary-button:hover{
-background:#555;
-}.loading-card{
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-padding:30px;
-margin-top:20px;
-background:#fff8e1;
-border-radius:15px;
-}
-
-.loader{
-width:45px;
-height:45px;
-border:5px solid #eee;
-border-top:5px solid #ff9800;
-border-radius:50%;
-animation:spin 1s linear infinite;
-margin-bottom:15px;
-}
-
-@keyframes spin{
-0%{transform:rotate(0deg);}
-100%{transform:rotate(360deg);}
-}
-
-.result-area{
-margin-top:25px;
-}
-
-.jathakam-report{
-background:#fffdf7;
-border-radius:18px;
-padding:20px;
-box-shadow:0 8px 20px rgba(0,0,0,.12);
-}
-
-.report-title{
-text-align:center;
-padding:15px;
-border-radius:15px;
-background:linear-gradient(135deg,#ffd54f,#fff3cd);
-margin-bottom:20px;
-}
-
-.report-title h2{
-color:#8B0000;
-margin-bottom:5px;
-}
-
-.report-section{
-background:white;
-border-left:5px solid #ff9800;
-border-radius:12px;
-padding:15px;
-margin-bottom:18px;
-}
-
-.report-section h3{
-color:#8B0000;
-margin-bottom:10px;
-border-bottom:1px solid #eee;
-padding-bottom:8px;
-}
-
-.details-grid{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:12px;
-}
-
-.details-grid p{
-margin:0;
-}
-
-.jathakam-text{
-line-height:1.8;
-font-size:16px;
-white-space:pre-wrap;
-word-break:break-word;
-}.report-buttons{
-display:flex;
-flex-wrap:wrap;
-gap:12px;
-justify-content:center;
-margin-top:20px;
-}
-
-.report-buttons button{
-padding:12px 20px;
-border:none;
-border-radius:10px;
-background:#ff9800;
-color:#fff;
-font-size:16px;
-font-weight:bold;
-cursor:pointer;
-transition:.3s;
-}
-
-.report-buttons button:hover{
-background:#f57c00;
-transform:translateY(-2px);
-}
-
-.error-message{
-background:#ffebee;
-border-left:5px solid #d32f2f;
-padding:15px;
-border-radius:12px;
-color:#b71c1c;
-margin-top:20px;
-}
-
-.error-message h3{
-margin-bottom:8px;
-}
-
-@media(max-width:768px){
-
-.page-heading{
-flex-direction:column;
-text-align:center;
-}
-
-.details-grid{
-grid-template-columns:1fr;
-}
-
-.report-buttons{
-flex-direction:column;
-}
-
+.secondary-button,
 .report-buttons button,
-.primary-button,
-.secondary-button{
-width:100%;
+button {
+  min-height: 52px;
+  padding: 13px 22px;
+  border: 0;
+  border-radius: 14px;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 8px 18px rgba(30, 70, 130, 0.18);
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    filter 0.22s ease;
 }
 
-.jathakam-container{
-padding:15px;
+.primary-button {
+  background: linear-gradient(135deg, #e58b00, #bd5700);
 }
 
-.page-heading h1{
-font-size:28px;
+.secondary-button {
+  background: linear-gradient(135deg, #596579, #303947);
 }
 
-.heading-icon{
-font-size:42px;
+.primary-button:hover,
+.secondary-button:hover,
+.report-buttons button:hover,
+button:hover {
+  transform: translateY(-3px);
+  filter: brightness(1.07);
+  box-shadow: 0 13px 25px rgba(30, 70, 130, 0.25);
 }
 
+.primary-button:active,
+.secondary-button:active,
+.report-buttons button:active,
+button:active {
+  transform: translateY(0);
 }
 
-/* ===== Modern Jathakam Design ===== */
-
-body{
-    background:#f4f7fb;
-    font-family:'Noto Sans Telugu',sans-serif;
+.form-card > .primary-button,
+.form-card > .secondary-button {
+  width: 100%;
 }
 
-.container{
-    max-width:900px;
-    margin:auto;
-    background:#fff;
-    border-radius:20px;
-    padding:25px;
-    box-shadow:0 10px 30px rgba(0,0,0,.15);
+.form-card > .primary-button {
+  grid-column: 1 / -1;
 }
 
-.report-title{
-    background:linear-gradient(135deg,#1e88e5,#1565c0);
-    color:#fff;
-    padding:20px;
-    border-radius:15px;
-    text-align:center;
-    margin-bottom:20px;
+.form-card > .secondary-button {
+  grid-column: 1 / -1;
 }
 
-.report-title h2{
-    margin:0;
-    font-size:30px;
+/* =========================================
+   Loading
+========================================= */
+
+.loading-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 38px;
+  margin-top: 24px;
+  border: 1px solid #f3d8a5;
+  border-radius: 20px;
+  color: #6c3b00;
+  background: linear-gradient(145deg, #fffdf7, #fff3d7);
+  box-shadow: 0 12px 28px rgba(100, 65, 10, 0.1);
 }
 
-.report-section{
-    background:#ffffff;
-    border-left:6px solid #1e88e5;
-    padding:20px;
-    margin:20px 0;
-    border-radius:12px;
-    box-shadow:0 5px 15px rgba(0,0,0,.08);
+.loader {
+  width: 52px;
+  height: 52px;
+  margin-bottom: 16px;
+  border: 6px solid rgba(230, 147, 0, 0.18);
+  border-top-color: #d77c00;
+  border-radius: 50%;
+  animation: spin 0.85s linear infinite;
 }
 
-.details-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-    gap:15px;
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
-.details-grid p{
-    background:#f8f9ff;
-    padding:12px;
-    border-radius:10px;
+/* =========================================
+   Result / Report
+========================================= */
+
+.result-area {
+  margin-top: 30px;
 }
 
-.jathakam-text{
-    line-height:2;
-    font-size:18px;
-    color:#333;
+.jathakam-report {
+  padding: 24px;
+  border: 1px solid rgba(220, 196, 151, 0.65);
+  border-radius: 24px;
+  background: linear-gradient(145deg, #fffefa, #fff8eb);
+  box-shadow: 0 16px 38px rgba(70, 50, 25, 0.13);
 }
 
-.report-buttons{
-    display:flex;
-    flex-wrap:wrap;
-    justify-content:center;
-    gap:15px;
-    margin-top:30px;
+.report-title {
+  padding: 25px 20px;
+  margin-bottom: 22px;
+  border-radius: 19px;
+  color: #ffffff;
+  text-align: center;
+  background:
+    linear-gradient(135deg, #611c24 0%, #a53b19 52%, #d98900 100%);
+  box-shadow: 0 12px 26px rgba(109, 28, 25, 0.23);
 }
 
-.report-buttons button{
-    background:#1565c0;
-    color:#fff;
-    border:none;
-    padding:12px 22px;
-    border-radius:10px;
-    font-size:17px;
-    cursor:pointer;
-    transition:.3s;
+.report-title h2 {
+  margin-bottom: 8px;
+  color: #ffffff;
+  font-size: clamp(24px, 3.5vw, 34px);
 }
 
-.report-buttons button:hover{
-    background:#0d47a1;
-    transform:translateY(-3px);
+.report-title p {
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 16px;
 }
 
-input,
-select{
-    width:100%;
-    padding:12px;
-    border-radius:10px;
-    border:1px solid #ccc;
-    margin-bottom:15px;
-    font-size:16px;
+.report-section {
+  padding: 22px;
+  margin-bottom: 20px;
+  border: 1px solid #eadfcf;
+  border-left: 7px solid #d78800;
+  border-radius: 17px;
+  background: #ffffff;
+  box-shadow: 0 9px 22px rgba(60, 45, 27, 0.075);
 }
 
-button{
-    background:#1565c0;
-    color:#fff;
-    border:none;
-    border-radius:10px;
-    padding:14px;
-    font-size:18px;
-    cursor:pointer;
-    transition:.3s;
+.report-section h3 {
+  padding-bottom: 11px;
+  margin-bottom: 16px;
+  border-bottom: 1px dashed #dcc9aa;
+  color: #681f21;
+  font-size: 21px;
 }
 
-button:hover{
-    background:#0d47a1;
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 13px;
 }
 
-@media(max-width:600px){
-    .container{
-        margin:10px;
-        padding:15px;
-    }
+.details-grid p {
+  padding: 14px 15px;
+  border: 1px solid #eee2d1;
+  border-radius: 13px;
+  background: linear-gradient(145deg, #fffdf9, #fff6e8);
+  line-height: 1.65;
+}
 
-    .report-title h2{
-        font-size:22px;
-    }
+.details-grid b {
+  color: #73211f;
+}
 
-    .jathakam-text{
-        font-size:16px;
-    }
+.jathakam-text {
+  overflow-wrap: anywhere;
+  color: #37312d;
+  font-size: 17px;
+  line-height: 2;
+  white-space: normal;
+  word-break: break-word;
+}
 
-    .report-buttons button{
-        width:100%;
-    }
+.jathakam-text p {
+  margin-bottom: 14px;
+}
+
+/* =========================================
+   Report Buttons
+========================================= */
+
+.report-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 13px;
+  margin-top: 26px;
+}
+
+.report-buttons button {
+  min-width: 145px;
+  background: linear-gradient(135deg, #1976d2, #0d47a1);
+}
+
+.report-buttons button:nth-child(2) {
+  background: linear-gradient(135deg, #2e9d57, #126b34);
+}
+
+.report-buttons button:nth-child(3) {
+  background: linear-gradient(135deg, #795548, #4e342e);
+}
+
+.report-buttons button:nth-child(4) {
+  background: linear-gradient(135deg, #6d4bc3, #442393);
+}
+
+/* =========================================
+   Error Message
+========================================= */
+
+.error-message {
+  padding: 18px;
+  margin-top: 22px;
+  border: 1px solid #ffc8c8;
+  border-left: 7px solid #d32f2f;
+  border-radius: 15px;
+  color: #8f1d1d;
+  background: #fff1f1;
+  box-shadow: 0 10px 22px rgba(160, 35, 35, 0.1);
+}
+
+.error-message h3 {
+  margin-bottom: 9px;
+}
+
+/* =========================================
+   Footer
+========================================= */
+
+footer,
+.site-footer,
+.footer {
+  padding: 20px;
+  margin-top: 24px;
+  border-radius: 17px;
+  color: #5c5148;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: 0 8px 20px rgba(40, 35, 25, 0.08);
+}
+
+/* =========================================
+   Mobile Design
+========================================= */
+
+@media (max-width: 768px) {
+  body {
+    padding: 14px 10px;
+  }
+
+  .jathakam-container,
+  .home-container,
+  .main-card,
+  .content-card {
+    padding: 18px;
+    border-radius: 21px;
+  }
+
+  .page-heading {
+    flex-direction: column;
+    padding: 20px 15px;
+    text-align: center;
+  }
+
+  .heading-icon {
+    width: 64px;
+    height: 64px;
+    flex-basis: 64px;
+    font-size: 39px;
+  }
+
+  .form-card {
+    grid-template-columns: 1fr;
+    padding: 18px;
+  }
+
+  .form-card > .primary-button,
+  .form-card > .secondary-button {
+    grid-column: auto;
+  }
+
+  .details-grid {
+    grid-template-columns: 1fr;
+  }
+
+  nav,
+  .nav-menu,
+  .menu,
+  .navigation {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  nav a,
+  .nav-menu a,
+  .menu a,
+  .navigation a {
+    min-width: 0;
+    padding: 13px 8px;
+  }
+
+  .report-buttons {
+    flex-direction: column;
+  }
+
+  .report-buttons button,
+  .primary-button,
+  .secondary-button {
+    width: 100%;
+  }
+
+  .jathakam-report {
+    padding: 14px;
+  }
+
+  .report-section {
+    padding: 17px;
+  }
+
+  .jathakam-text {
+    font-size: 16px;
+    line-height: 1.85;
+  }
+}
+
+/* =========================================
+   Print Design
+========================================= */
+
+@media print {
+  body {
+    padding: 0;
+    color: #000000;
+    background: #ffffff;
+  }
+
+  .page-heading,
+  .form-card,
+  .report-buttons,
+  .loading-card,
+  nav,
+  .nav-menu,
+  .menu,
+  .navigation,
+  footer {
+    display: none !important;
+  }
+
+  .jathakam-container,
+  .jathakam-report,
+  .report-section {
+    padding: 10px;
+    border: 0;
+    box-shadow: none;
+    background: #ffffff;
+  }
+
+  .report-title {
+    color: #000000;
+    border-bottom: 2px solid #000000;
+    background: #ffffff;
+    box-shadow: none;
+  }
+
+  .report-title h2,
+  .report-title p {
+    color: #000000;
+  }
 }
