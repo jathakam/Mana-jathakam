@@ -1,83 +1,187 @@
 <!DOCTYPE html>
 <html lang="te">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>జాతకం</title>
 
-<link rel="stylesheet" href="style.css">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>మన జాతకం</title>
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <link
+    rel="stylesheet"
+    href="style.css"
+  >
 </head>
 
 <body>
 
-<div class="container">
+  <main class="page-wrapper">
 
-<h1>📜 జాతకం</h1>
-  <label><b>🌐 భాష ఎంచుకోండి</b></label>
+    <section class="jathakam-container">
 
-<select id="language">
-  <option value="te">తెలుగు</option>
-  <option value="en">English</option>
-  <option value="hi">हिन्दी</option>
-  <option value="ta">தமிழ்</option>
-  <option value="kn">ಕನ್ನಡ</option>
-  <option value="ml">മലയാളം</option>
-  <option value="mr">मराठी</option>
-  <option value="gu">ગુજરાતી</option>
-  <option value="bn">বাংলা</option>
-  <option value="or">ଓଡ଼ିଆ</option>
-  <option value="pa">ਪੰਜਾਬੀ</option>
-</select>
+      <div class="page-heading">
 
-<input type="text" id="name" placeholder="పేరు">
+        <div class="heading-icon">
+          📜
+        </div>
 
-<select id="gender">
-<option value="పురుషుడు">పురుషుడు</option>
-<option value="స్త్రీ">స్త్రీ</option>
-</select>
+        <div>
+          <h1>మన జాతకం</h1>
 
-<input type="date" id="dob">
+          <p>
+            జన్మ వివరాలు నమోదు చేసి జాతకం తయారు చేయండి
+          </p>
+        </div>
 
-<input type="time" id="tob">
+      </div>
 
-<input type="text" id="place" placeholder="పుట్టిన స్థలం">
+      <div class="form-card">
 
-  <button type="button" onclick="generateJathakam()">
-జాతకం తయారు చేయి
-</button>
+        <div class="form-group">
 
-<button onclick="shareJathakam()">
-WhatsApp Share
-</button>
+          <label for="name">
+            👤 పూర్తి పేరు
+          </label>
 
-<div id="loading" style="display:none;">
-⏳ లోడ్ అవుతోంది...
-</div>
-<div class="tabs">
+          <input
+            type="text"
+            id="name"
+            placeholder="పూర్తి పేరు నమోదు చేయండి"
+            autocomplete="name"
+          >
 
-<button class="tab-btn" onclick="showTab('summary')">
-📋 సారాంశం
-</button>
+        </div>
 
-<button class="tab-btn" onclick="showTab('kundli')">
-🪐 కుండలి
-</button>
+        <div class="form-group">
 
-<button class="tab-btn" onclick="showTab('ashtaka')">
-📊 అష్టకవర్గం
-</button>
+          <label for="gender">
+            🚻 లింగం
+          </label>
 
-  <button class="tab-btn" onclick="showTab('full')">
-📄 పూర్తి రిపోర్ట్
-</button>
+          <select id="gender">
 
-</div>
+            <option value="">
+              లింగం ఎంచుకోండి
+            </option>
 
-<div id="result"></div>
+            <option value="పురుషుడు">
+              పురుషుడు
+            </option>
 
-</div>
+            <option value="స్త్రీ">
+              స్త్రీ
+            </option>
 
-  <script src="script.js?v=8"></script>
+          </select>
+
+        </div>
+
+        <div class="form-group">
+
+          <label for="dob">
+            📅 పుట్టిన తేదీ
+          </label>
+
+          <input
+            type="date"
+            id="dob"
+          >
+
+        </div>
+
+        <div class="form-group">
+
+          <label for="tob">
+            🕒 పుట్టిన సమయం
+          </label>
+
+          <input
+            type="time"
+            id="tob"
+          >
+
+        </div>
+
+        <div class="form-group">
+
+          <label for="place">
+            📍 పుట్టిన స్థలం
+          </label>
+
+          <input
+            type="text"
+            id="place"
+            placeholder="ఉదా: తాడిపత్రి"
+            autocomplete="address-level2"
+          >
+
+        </div>
+
+        <button
+          type="button"
+          class="primary-button"
+          onclick="generateJathakam()"
+        >
+          📜 జాతకం తయారు చేయి
+        </button>
+
+        <button
+          type="button"
+          class="secondary-button"
+          onclick="goHome()"
+        >
+          🏠 హోమ్
+        </button>
+
+      </div>
+
+      <div
+        id="loading"
+        class="loading-card"
+        style="display: none;"
+      >
+
+        <div class="loader"></div>
+
+        <p>
+          జాతకం తయారవుతోంది...
+        </p>
+
+      </div>
+
+      <section
+        id="result"
+        class="result-area"
+        aria-live="polite"
+      >
+      </section>
+
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
 
 </body>
+
 </html>
