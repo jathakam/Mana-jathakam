@@ -1,12 +1,14 @@
 let jathakamFullReport = "";
 let jathakamApiText = "";
+let currentPersonDetails = null;
+
+/* =========================================
+   జాతకం తయారు చేసే ప్రధాన Function
+========================================= */
 
 async function generateJathakam() {
   const loading = document.getElementById("loading");
   const result = document.getElementById("result");
-
-  loading.style.display = "block";
-  result.innerHTML = "";
 
   const name = document.getElementById("name").value.trim();
   const gender = document.getElementById("gender").value;
@@ -15,69 +17,33 @@ async function generateJathakam() {
   const place = document.getElementById("place").value.trim();
 
   if (!name || !gender || !dob || !time || !place) {
-    loading.style.display = "none";
-    jathakamApiText = await response.text();
-
-const parser = new DOMParser();
-const doc = parser.parseFromString(jathakamApiText, "text/html");
-
-let cleanText = doc.body
-  ? doc.body.innerText.trim()
-  : jathakamApiText.trim();
-
-jathakamFullReport = cleanText;
-
-result.innerHTML = `
-  <div class="jathakam-report">
-
-    <div class="report-title">
-      <h2>📜 సంపూర్ణ జన్మ జాతకం</h2>
-      <p>${name} గారి జాతక వివరాలు</p>
-    </div>
-
-    <div class="report-section">
-      <h3>👤 వ్యక్తిగత వివరాలు</h3>
-
-      <div class="details-grid">
-        <p><b>పేరు:</b> ${name}</p>
-        <p><b>లింగం:</b> ${gender}</p>
-        <p><b>పుట్టిన తేదీ:</b> ${dob}</p>
-        <p><b>పుట్టిన సమయం:</b> ${time}</p>
-        <p><b>పుట్టిన స్థలం:</b> ${place}</p>
-      </div>
-    </div>
-
-    <div class="report-section">
-      <h3>🌟 జన్మ జాతక సమాచారం</h3>
-
-      <div class="jathakam-text">
-        ${cleanText.replace(/\n/g, "<br>")}
-      </div>
-    </div>
-
-    <div class="report-buttons">
-
-      <button onclick="showJathakamSummary()">
-        📋 సారాంశం
-      </button>
-
-      <button onclick="shareJathakam()">
-        📲 వాట్సాప్
-      </button>
-
-      <button onclick="window.print()">
-        🖨️ ప్రింట్
-      </button>
-
-    </div>
-
-  </div>
-`;
+    result.innerHTML =
+      '<div class="error-message">⚠️ దయచేసి అన్ని వివరాలు నమోదు చేయండి.</div>';
     return;
   }
 
-  const d = dob.split("-");
-  const birthdate = `${d[2]}-${d[1]}-${d[0]}`;
+  loading.style.display = "block";
+  result.innerHTML = "";
+
+  currentPersonDetails = {
+    name,
+    gender,
+    dob,
+    time,
+    place
+  };
+
+  const dateParts = dob.split("-");
+
+  if (dateParts.length !== 3) {
+    loading.style.display = "none";
+    result.innerHTML =
+      '<div class="error-message">⚠️ పుట్టిన తేదీ సరిగా నమోదు చేయండి.</div>';
+    return;
+  }
+
+  const birthdate =
+    `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
 
   const body =
     `name=${encodeURIComponent(name)}` +
@@ -86,271 +52,542 @@ result.innerHTML = `
     `&City=${encodeURIComponent(place.toUpperCase())}`;
 
   try {
-    const response = await fetch("https://kundli1.p.rapidapi.com/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        "X-RapidAPI-Key": "a97e48a6b4msh1f863e6605b79e5p188a89jsnac6609305923",
-        "X-RapidAPI-Host": "kundli1.p.rapidapi.com"
-      },
-      body: body
-    });
+    const response = await fetch(
+      "https://kundli1.p.rapidapi.com/",
+      {
+        method: "POST",
 
-    const text = await response.text();
-    jathakamApiText = text;
+        headers: {
+          "Content-Type":
+            "application/x-www-form-urlencoded",
+
+          "X-RapidAPI-Key":
+            "X-RapidAPI-Key": "a97e48a6b4msh1f863e6605b79e5p188a89jsnac6609305923",
+
+          "X-RapidAPI-Host":
+            "kundli1.p.rapidapi.com"
+        },
+
+        body: body
+      }
+    );
 
     if (!response.ok) {
-      throw new Error("API లోపం: " + response.status);
+      throw new Error(
+        `API Error: ${response.status}`
+      );
     }
 
-    loading.style.display = "none";
+    jathakamApiText = await response.text();
 
-    jathakamFullReport = `
-      <div class="card">
-        <h2>📜 జన్మ జాతకం</h2>
+    const cleanText =
+      cleanApiResponse(jathakamApiText);
 
-        <p><b>👤 పేరు:</b> ${name}</p>
-        <p><b>🚻 లింగం:</b> ${gender}</p>
-        <p><b>📅 జనన తేదీ:</b> ${dob}</p>
-        <p><b>🕐 జనన సమయం:</b> ${time}</p>
-        <p><b>📍 జనన స్థలం:</b> ${place}</p>
+    if (!cleanText) {
+      throw new Error(
+        "API నుంచి జాతక సమాచారం రాలేదు."
+      );
+    }
 
-        <hr>
+    jathakamFullReport = cleanText;
 
-        <h3>🪐 జాతక వివరాలు</h3>
-
-        <div class="api-result">
-          ${text}
-        </div>
-      </div>
-    `;
-
-    result.innerHTML = jathakamFullReport;
+    showFullJathakam();
 
   } catch (error) {
+    console.error("Jathakam Error:", error);
+
+    result.innerHTML = `
+      <div class="error-message">
+        <h3>⚠️ జాతకం తయారు కాలేదు</h3>
+
+        <p>
+          ఇంటర్నెట్ కనెక్షన్ లేదా RapidAPI Key
+          సరిగా ఉందో పరిశీలించండి.
+        </p>
+
+        <p>
+          <b>వివరం:</b>
+          ${escapeHtml(error.message)}
+        </p>
+      </div>
+    `;
+
+  } finally {
     loading.style.display = "none";
-    result.innerHTML = "❌ లోపం: " + error.message;
   }
 }
 
-function showTab(tabName) {
-  const result = document.getElementById("result");
 
-  if (!jathakamFullReport) {
-    alert("ముందుగా జాతకం తయారు చేయండి.");
-    return;
+/* =========================================
+   API HTML/Text శుభ్రం చేయడం
+========================================= */
+
+function cleanApiResponse(apiText) {
+  if (!apiText) {
+    return "";
   }
-if (tabName === "summary") {
+
   const parser = new DOMParser();
-  const doc = parser.parseFromString(jathakamApiText, "text/html");
-  const reportText = doc.body.innerText;
 
-  result.innerHTML = `
-    <div class="card">
-      <h2>📋 జాతక సారాంశం</h2>
-      <pre style="white-space: pre-wrap;">${reportText}</pre>
-    </div>
-  `;
-}
-   else if (tabName === "kundli") {
-    result.innerHTML = `
-      <div class="card">
-        <h2>🪐 కుండలి వివరాలు</h2>
-        <p>కుండలి ట్యాబ్ పనిచేస్తోంది.</p>
-      </div>
-    `;
-  } else if (tabName === "ashtaka") {
-    result.innerHTML = `
-      <div class="card">
-        <h2>📊 అష్టకవర్గం</h2>
-        <p>అష్టకవర్గం ట్యాబ్ పనిచేస్తోంది.</p>
-      </div>
-    `;
-  } else if (tabName === "full") {
-    result.innerHTML = jathakamFullReport;
-  }
-}
+  const doc = parser.parseFromString(
+    apiText,
+    "text/html"
+  );
 
-function shareJathakam() {
-  const text = document.getElementById("result").innerText.trim();
+  const unwantedSelectors = [
+    "script",
+    "style",
+    "nav",
+    "footer",
+    "header",
+    "form",
+    "button",
+    "iframe",
+    "noscript"
+  ];
 
-  if (!text) {
-    alert("ముందుగా జాతకం తయారు చేయండి.");
-    return;
+  unwantedSelectors.forEach(selector => {
+    doc.querySelectorAll(selector).forEach(element => {
+      element.remove();
+    });
+  });
+
+  let cleanText = "";
+
+  if (doc.body) {
+    cleanText = doc.body.innerText;
+  } else {
+    cleanText = apiText;
   }
 
-  const url = "https://wa.me/?text=" + encodeURIComponent(text);
-  window.open(url, "_blank");
+  cleanText = cleanText
+    .replace(/\r/g, "")
+    .replace(/\t/g, " ")
+    .replace(/[ ]{2,}/g, " ")
+    .replace(/\n[ ]+/g, "\n")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+
+  cleanText = removeUnwantedLines(cleanText);
+
+  return cleanText;
 }
-function showJathakamSummary() {
 
-  const result = document.getElementById("result");
 
-  if (!jathakamFullReport) {
-    alert("ముందుగా జాతకం తయారు చేయండి.");
-    return;
-  }
+/* =========================================
+   అవసరం లేని API లైన్లు తొలగించడం
+========================================= */
 
-  const lines = jathakamFullReport
+function removeUnwantedLines(text) {
+  const unwantedWords = [
+    "your title here",
+    "undefined",
+    "null",
+    "javascript",
+    "copyright",
+    "all rights reserved"
+  ];
+
+  const lines = text
     .split("\n")
     .map(line => line.trim())
     .filter(line => line !== "");
 
-  const summaryText = lines.slice(0, 20).join("<br>");
+  const cleanedLines = lines.filter(line => {
+    const lowerLine = line.toLowerCase();
 
-  result.innerHTML = `
-    <div class="jathakam-report">
+    return !unwantedWords.some(word =>
+      lowerLine === word ||
+      lowerLine.includes(word)
+    );
+  });
 
-      <div class="report-title">
-        <h2>📋 జాతక సారాంశం</h2>
-      </div>
-
-      <div class="report-section">
-        <div class="jathakam-text">
-          ${summaryText}
-        </div>
-      </div>
-
-      <div class="report-buttons">
-
-        <button onclick="showFullJathakam()">
-          📜 పూర్తి జాతకం
-        </button>
-
-        <button onclick="shareJathakam()">
-          📲 వాట్సాప్
-        </button>
-
-        <button onclick="window.print()">
-          🖨️ ప్రింట్
-        </button>
-
-      </div>
-
-    </div>
-  `;
+  return cleanedLines.join("\n");
 }
 
 
-function showFullJathakam() {
+/* =========================================
+   పూర్తి జాతకం చూపించడం
+========================================= */
 
+function showFullJathakam() {
   const result = document.getElementById("result");
+
+  if (!jathakamFullReport) {
+    alert("ముందుగా జాతకం తయారు చేయండి.");
+    return;
+  }
+
+  const details = currentPersonDetails || {};
 
   result.innerHTML = `
     <div class="jathakam-report">
 
       <div class="report-title">
         <h2>📜 సంపూర్ణ జన్మ జాతకం</h2>
+
+        <p>
+          ${escapeHtml(details.name || "")}
+          గారి జాతక వివరాలు
+        </p>
       </div>
+
+      ${createPersonalDetailsHtml(details)}
 
       <div class="report-section">
+
+        <h3>🌟 జాతక సమాచారం</h3>
+
         <div class="jathakam-text">
-          ${jathakamFullReport.replace(/\n/g, "<br>")}
+          ${formatReportText(jathakamFullReport)}
         </div>
+
       </div>
 
-      <div class="report-buttons">
+      ${createReportButtonsHtml("full")}
 
-        <button onclick="showJathakamSummary()">
-          📋 సారాంశం
-        </button>
+    </div>
+  `;
 
-        <button onclick="shareJathakam()">
-          📲 వాట్సాప్
-        </button>
+  scrollToResult();
+}
 
-        <button onclick="window.print()">
-          🖨️ ప్రింట్
-        </button>
+
+/* =========================================
+   సారాంశం చూపించడం
+========================================= */
+
+function showJathakamSummary() {
+  const result = document.getElementById("result");
+
+  if (!jathakamFullReport) {
+    alert("ముందుగా జాతకం తయారు చేయండి.");
+    return;
+  }
+
+  const details = currentPersonDetails || {};
+  const summaryText =
+    createSummary(jathakamFullReport);
+
+  result.innerHTML = `
+    <div class="jathakam-report">
+
+      <div class="report-title">
+        <h2>📋 జాతక సారాంశం</h2>
+
+        <p>
+          ${escapeHtml(details.name || "")}
+          గారి ముఖ్యమైన జాతక వివరాలు
+        </p>
+      </div>
+
+      ${createPersonalDetailsHtml(details)}
+
+      <div class="report-section">
+
+        <h3>🔮 ముఖ్య సమాచారం</h3>
+
+        <div class="jathakam-text">
+          ${formatReportText(summaryText)}
+        </div>
+
+      </div>
+
+      ${createReportButtonsHtml("summary")}
+
+    </div>
+  `;
+
+  scrollToResult();
+}
+
+
+/* =========================================
+   జాతక సారాంశం తయారు చేయడం
+========================================= */
+
+function createSummary(fullText) {
+  const lines = fullText
+    .split("\n")
+    .map(line => line.trim())
+    .filter(line => line.length > 2);
+
+  if (lines.length <= 25) {
+    return lines.join("\n");
+  }
+
+  const importantWords = [
+    "ascendant",
+    "lagna",
+    "rasi",
+    "rashi",
+    "nakshatra",
+    "moon",
+    "sun",
+    "mars",
+    "mercury",
+    "jupiter",
+    "venus",
+    "saturn",
+    "rahu",
+    "ketu",
+    "marriage",
+    "career",
+    "health",
+    "wealth",
+    "education",
+    "children"
+  ];
+
+  const importantLines = lines.filter(line => {
+    const lowerLine = line.toLowerCase();
+
+    return importantWords.some(word =>
+      lowerLine.includes(word)
+    );
+  });
+
+  const selectedLines = [];
+
+  lines.slice(0, 12).forEach(line => {
+    if (!selectedLines.includes(line)) {
+      selectedLines.push(line);
+    }
+  });
+
+  importantLines.slice(0, 18).forEach(line => {
+    if (!selectedLines.includes(line)) {
+      selectedLines.push(line);
+    }
+  });
+
+  return selectedLines
+    .slice(0, 30)
+    .join("\n");
+}
+
+
+/* =========================================
+   వ్యక్తిగత వివరాల HTML
+========================================= */
+
+function createPersonalDetailsHtml(details) {
+  return `
+    <div class="report-section">
+
+      <h3>👤 వ్యక్తిగత వివరాలు</h3>
+
+      <div class="details-grid">
+
+        <p>
+          <b>పేరు:</b>
+          ${escapeHtml(details.name || "")}
+        </p>
+
+        <p>
+          <b>లింగం:</b>
+          ${escapeHtml(details.gender || "")}
+        </p>
+
+        <p>
+          <b>పుట్టిన తేదీ:</b>
+          ${formatDate(details.dob)}
+        </p>
+
+        <p>
+          <b>పుట్టిన సమయం:</b>
+          ${escapeHtml(details.time || "")}
+        </p>
+
+        <p>
+          <b>పుట్టిన స్థలం:</b>
+          ${escapeHtml(details.place || "")}
+        </p>
 
       </div>
 
     </div>
   `;
 }
-.jathakam-report {
-  margin-top: 25px;
-  padding: 18px;
-  background: #fffdf7;
-  border-radius: 18px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
-  text-align: left;
+
+
+/* =========================================
+   బటన్ల HTML
+========================================= */
+
+function createReportButtonsHtml(viewName) {
+  const changeViewButton =
+    viewName === "summary"
+      ? `
+        <button
+          type="button"
+          onclick="showFullJathakam()"
+        >
+          📜 పూర్తి జాతకం
+        </button>
+      `
+      : `
+        <button
+          type="button"
+          onclick="showJathakamSummary()"
+        >
+          📋 సారాంశం
+        </button>
+      `;
+
+  return `
+    <div class="report-buttons">
+
+      ${changeViewButton}
+
+      <button
+        type="button"
+        onclick="shareJathakam()"
+      >
+        📲 వాట్సాప్
+      </button>
+
+      <button
+        type="button"
+        onclick="printJathakam()"
+      >
+        🖨️ ప్రింట్
+      </button>
+
+      <button
+        type="button"
+        onclick="goHome()"
+      >
+        🏠 హోమ్
+      </button>
+
+    </div>
+  `;
 }
 
-.report-title {
-  text-align: center;
-  padding: 15px;
-  margin-bottom: 18px;
-  color: #7a1f00;
-  background: linear-gradient(135deg, #ffd88a, #fff3cf);
-  border-radius: 14px;
-}
 
-.report-title h2 {
-  margin: 0 0 5px;
-}
+/* =========================================
+   WhatsApp Share
+========================================= */
 
-.report-title p {
-  margin: 0;
-  color: #5c3a20;
-}
-
-.report-section {
-  padding: 15px;
-  margin-bottom: 16px;
-  background: white;
-  border-left: 5px solid #d78300;
-  border-radius: 12px;
-}
-
-.report-section h3 {
-  margin-top: 0;
-  color: #8b2f00;
-  border-bottom: 1px solid #f0d7ac;
-  padding-bottom: 8px;
-}
-
-.details-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 8px 15px;
-}
-
-.details-grid p {
-  margin: 5px 0;
-}
-
-.jathakam-text {
-  line-height: 1.9;
-  color: #292929;
-  word-wrap: break-word;
-  white-space: normal;
-}
-
-.report-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  justify-content: center;
-  margin-top: 15px;
-}
-
-.report-buttons button {
-  width: auto;
-  min-width: 130px;
-  padding: 12px 18px;
-}
-
-@media screen and (max-width: 600px) {
-  .details-grid {
-    grid-template-columns: 1fr;
+function shareJathakam() {
+  if (!jathakamFullReport) {
+    alert("ముందుగా జాతకం తయారు చేయండి.");
+    return;
   }
 
-  .jathakam-report {
-    padding: 10px;
+  const details = currentPersonDetails || {};
+
+  const shareText = `
+🙏 మన జాతకం
+
+పేరు: ${details.name || ""}
+లింగం: ${details.gender || ""}
+పుట్టిన తేదీ: ${formatDate(details.dob)}
+పుట్టిన సమయం: ${details.time || ""}
+పుట్టిన స్థలం: ${details.place || ""}
+
+📋 జాతక సారాంశం:
+
+${createSummary(jathakamFullReport)}
+  `.trim();
+
+  const whatsappUrl =
+    "https://wa.me/?text=" +
+    encodeURIComponent(shareText);
+
+  window.open(
+    whatsappUrl,
+    "_blank",
+    "noopener,noreferrer"
+  );
+}
+
+
+/* =========================================
+   Print
+========================================= */
+
+function printJathakam() {
+  if (!jathakamFullReport) {
+    alert("ముందుగా జాతకం తయారు చేయండి.");
+    return;
   }
 
-  .report-buttons button {
-    width: 100%;
+  window.print();
+}
+
+
+/* =========================================
+   Home
+========================================= */
+
+function goHome() {
+  window.location.href = "index.html";
+}
+
+
+/* =========================================
+   Report Text Formatting
+========================================= */
+
+function formatReportText(text) {
+  return escapeHtml(text)
+    .replace(/\n\n/g, "</p><p>")
+    .replace(/\n/g, "<br>");
+}
+
+
+/* =========================================
+   Date Formatting
+========================================= */
+
+function formatDate(dateValue) {
+  if (!dateValue) {
+    return "";
+  }
+
+  const parts = dateValue.split("-");
+
+  if (parts.length !== 3) {
+    return escapeHtml(dateValue);
+  }
+
+  return (
+    escapeHtml(parts[2]) +
+    "-" +
+    escapeHtml(parts[1]) +
+    "-" +
+    escapeHtml(parts[0])
+  );
+}
+
+
+/* =========================================
+   HTML Security
+========================================= */
+
+function escapeHtml(value) {
+  return String(value || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+
+/* =========================================
+   Result దగ్గరకు Scroll
+========================================= */
+
+function scrollToResult() {
+  const result = document.getElementById("result");
+
+  if (result) {
+    result.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
   }
 }
